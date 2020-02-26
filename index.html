@@ -129,7 +129,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">0</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -177,7 +177,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/26/Python%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">'Python小技巧'</a>
+            <a href="/2020/02/26/Python%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">Python小技巧</a>
         </h1>
 
         <div class="post-meta">
@@ -188,7 +188,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-26 18:44:51 / 修改时间：18:45:29" itemprop="dateCreated datePublished" datetime="2020-02-26T18:44:51+08:00">2020-02-26</time>
+              <time title="创建时间：2020-02-26 18:44:51 / 修改时间：19:01:27" itemprop="dateCreated datePublished" datetime="2020-02-26T18:44:51+08:00">2020-02-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
             </span>
 
           
@@ -202,22 +211,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一、时间戳转具体日期"><a href="#一、时间戳转具体日期" class="headerlink" title="一、时间戳转具体日期"></a>一、时间戳转具体日期</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line"># 时间戳</span><br><span class="line">data_time &#x3D; 1582712348</span><br><span class="line">timeArray &#x3D; time.localtime(data_time)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1:’2020-02-26 18:19:08’<br>otherStyleTime2 :’2020-02-26’</p>
-<h2 id="二、具体日期转时间戳"><a href="#二、具体日期转时间戳" class="headerlink" title="二、具体日期转时间戳"></a>二、具体日期转时间戳</h2><h3 id="形式1：有时间和日期"><a href="#形式1：有时间和日期" class="headerlink" title="形式1：有时间和日期"></a>形式1：有时间和日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26 18:19:08&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray))</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1 : ‘2020-02-26 18:19:08’<br>otherStyleTime2 : ‘2020-02-26’</p>
-<p>timeStamp : 1582712348</p>
-<h3 id="形式2：只有日期"><a href="#形式2：只有日期" class="headerlink" title="形式2：只有日期"></a>形式2：只有日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray)</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1 : ‘2020-02-26 00:00:00’<br>otherStyleTime2 : ‘2020-02-26’</p>
-<p>timeStamp : 1582646400</p>
-<h2 id="三、读json数据"><a href="#三、读json数据" class="headerlink" title="三、读json数据"></a>三、读json数据</h2><h3 id="3-1-针对小于200M的json文件"><a href="#3-1-针对小于200M的json文件" class="headerlink" title="3.1 针对小于200M的json文件"></a>3.1 针对小于200M的json文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">file_path &#x3D; &quot;路径&quot;</span><br><span class="line"></span><br><span class="line">with open(file_path, &#39;r&#39;,encoding&#x3D;&quot;UTF-8&quot;) as f:</span><br></pre></td></tr></table></figure>
-<pre><code>data = json.load(f)</code></pre><h3 id="3-2-针对大于200M的json文件"><a href="#3-2-针对大于200M的json文件" class="headerlink" title="3.2 针对大于200M的json文件"></a>3.2 针对大于200M的json文件</h3><p>针对超过200M的json文件，需要采用逐行读取，计算机无法直接缓存大文件，容易出现memoryerror的问题。</p>
+          <h3 id="一、时间戳转具体日期"><a href="#一、时间戳转具体日期" class="headerlink" title="一、时间戳转具体日期"></a>一、时间戳转具体日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line"># 时间戳</span><br><span class="line">data_time &#x3D; 1582712348</span><br><span class="line">timeArray &#x3D; time.localtime(data_time)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br></pre></td></tr></table></figure>
+<p>otherStyleTime1:’2020-02-26 18:19:08’<br>otherStyleTime2 :’2020-02-26’  </p>
+<h3 id="二、具体日期转时间戳"><a href="#二、具体日期转时间戳" class="headerlink" title="二、具体日期转时间戳"></a>二、具体日期转时间戳</h3><h4 id="形式1：有时间和日期"><a href="#形式1：有时间和日期" class="headerlink" title="形式1：有时间和日期"></a>形式1：有时间和日期</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26 18:19:08&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray))</span><br></pre></td></tr></table></figure>
+<p>otherStyleTime1 : ‘2020-02-26 18:19:08’<br>otherStyleTime2 : ‘2020-02-26’<br>timeStamp : 1582712348  </p>
+<h4 id="形式2：只有日期"><a href="#形式2：只有日期" class="headerlink" title="形式2：只有日期"></a>形式2：只有日期</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray)</span><br></pre></td></tr></table></figure>
+<p>otherStyleTime1 : ‘2020-02-26 00:00:00’<br>otherStyleTime2 : ‘2020-02-26’<br>timeStamp : 1582646400  </p>
+<h3 id="三、读json数据"><a href="#三、读json数据" class="headerlink" title="三、读json数据"></a>三、读json数据</h3><h4 id="3-1-针对小于200M的json文件"><a href="#3-1-针对小于200M的json文件" class="headerlink" title="3.1 针对小于200M的json文件"></a>3.1 针对小于200M的json文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">file_path &#x3D; &quot;路径&quot;</span><br><span class="line"></span><br><span class="line">with open(file_path, &#39;r&#39;,encoding&#x3D;&quot;UTF-8&quot;) as f:</span><br><span class="line">	data &#x3D; json.load(f)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2-针对大于200M的json文件"><a href="#3-2-针对大于200M的json文件" class="headerlink" title="3.2 针对大于200M的json文件"></a>3.2 针对大于200M的json文件</h4><p>针对超过200M的json文件，需要采用逐行读取，计算机无法直接缓存大文件，容易出现memoryerror的问题。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># -!- coding: utf-8 -!-</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path &#x3D; &quot;路径&quot;</span><br><span class="line"></span><br><span class="line">with open(file_path, encoding&#x3D;&#39;utf-8&#39;) as f:</span><br><span class="line">    num1 &#x3D; 0</span><br><span class="line">    while True:</span><br><span class="line">      num1 &#x3D; num1 + 1</span><br><span class="line"></span><br><span class="line">      print(u&#39;正在载入第%s行......&#39; % num1)</span><br><span class="line">      try:</span><br><span class="line">        lines &#x3D; f.readline() # 使用逐行读取的方法</span><br><span class="line">        # 去掉&quot;[&quot;和&quot;]&quot;字符</span><br><span class="line">        if lines[0]&#x3D;&#x3D;&quot;[&quot;:</span><br><span class="line">            print(1)</span><br><span class="line">        elif lines[0]&#x3D;&#x3D;&quot;]&quot;:</span><br><span class="line">            print(2)</span><br><span class="line">            break</span><br><span class="line">        else:</span><br><span class="line">            # 去掉结尾的&quot;,&quot;</span><br><span class="line">            lines &#x3D; lines[:-2]</span><br><span class="line">            i &#x3D; json.loads(lines) # 解析每一行数据</span><br><span class="line">      except Exception as e:</span><br><span class="line">        print(str(e))</span><br></pre></td></tr></table></figure>
 
-<h2 id="四、基于pandas的排序"><a href="#四、基于pandas的排序" class="headerlink" title="四、基于pandas的排序"></a>四、基于pandas的排序</h2><p>基于date属性值进行排序</p>
+
+
+<h3 id="四、基于pandas的排序"><a href="#四、基于pandas的排序" class="headerlink" title="四、基于pandas的排序"></a>四、基于pandas的排序</h3><p>基于date属性值进行排序</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">content &#x3D; pd.read_csv(&quot;.&#x2F;data.csv&quot;)</span><br><span class="line">content &#x3D; pd.DataFrame(content)</span><br><span class="line"># 基于date属性进行从小到大排序</span><br><span class="line">content &#x3D; content.sort_values(by&#x3D;&#39;date&#39;)</span><br></pre></td></tr></table></figure>
-<h2 id="五、基于panda的值选择"><a href="#五、基于panda的值选择" class="headerlink" title="五、基于panda的值选择"></a>五、基于panda的值选择</h2><p>选择满足‘2018-01-01’到‘2019-12-31’的数据</p>
+
+
+<h3 id="五、基于panda的值选择"><a href="#五、基于panda的值选择" class="headerlink" title="五、基于panda的值选择"></a>五、基于panda的值选择</h3><p>选择满足‘2018-01-01’到‘2019-12-31’的数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">content &#x3D; content[content[&#39;date&#39;]&gt;&#x3D;&#39;2018-01-01&#39;][content[&#39;date&#39;]&lt;&#x3D;&#39;2019-12-31&#39;]</span><br></pre></td></tr></table></figure>
+
 
 
       
@@ -447,6 +462,12 @@
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
