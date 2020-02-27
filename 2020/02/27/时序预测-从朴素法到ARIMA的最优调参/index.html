@@ -20,30 +20,62 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="你不会找到路，除非你敢于迷路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="达达的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、简介​    本节内容主要下列七种方法： ​    1、朴素法：以序列训练集中的最后一个结果作为未来的预测结果； ​    2、简单平均法：以训练集中所有数据的平均值作为未来的预测结果； ​    3、移动平均法：以序列最后一段时间数据的平均值作为未来预测的结果，可以是60天&#x2F;40天等； ​    4、简单指数平滑法：基于指数递降的方式，例如 yt&#x3D;ayt + (1-a)yt-1。基于递降训练">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时序预测-从朴素法到ARIMA的最优调参">
+<meta property="og:url" content="http://yoursite.com/2020/02/27/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B-%E4%BB%8E%E6%9C%B4%E7%B4%A0%E6%B3%95%E5%88%B0ARIMA%E7%9A%84%E6%9C%80%E4%BC%98%E8%B0%83%E5%8F%82/index.html">
 <meta property="og:site_name" content="达达的博客">
-<meta property="og:description" content="你不会找到路，除非你敢于迷路">
+<meta property="og:description" content="一、简介​    本节内容主要下列七种方法： ​    1、朴素法：以序列训练集中的最后一个结果作为未来的预测结果； ​    2、简单平均法：以训练集中所有数据的平均值作为未来的预测结果； ​    3、移动平均法：以序列最后一段时间数据的平均值作为未来预测的结果，可以是60天&#x2F;40天等； ​    4、简单指数平滑法：基于指数递降的方式，例如 yt&#x3D;ayt + (1-a)yt-1。基于递降训练">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://uploader.shimo.im/f/k19rHa6Z714nrPdJ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/qAzRYGvWOr8J0YY0.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/zOlyyO0tH6IwxvMQ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/I3T4n6ZRTkEgbp47.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/FjcVivdy6cglHaoM.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Tpqt8zyq5XcRBJVz.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/mjg73kKq3Ck5Tl6b.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/xKCZloshqcs8Q2NK.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/fHorhOpKRasH85si.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/82ekwrykf3IRqfDF.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/snCRT1i2ZKIvVtOP.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/LgXVWczpUfM2CcMO.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/75syJiJ2v0oJwVdV.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/eVKlAC3bxNoT18fG.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/9AZy2QZTE3Y0Utew.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Ap7MlMSjKs4KAevQ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/CM2UtcQ29MQVnuZZ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Mk2TFpJVjdA9Hbje.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/hlozYqJkWEk4aGp8.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/ECJlGdWefaE9b03I.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/nhoELqbBCksZxNQV.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/YWc0AAx9PWsKfwXo.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/l8kJ3SIErw8MbjG8.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/EQrwzQ7rR0U0wyVV.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/ma9OJIClEh42NJ4K.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/tZkBlCbmx5gVsoHx.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/GGuF48vtqpAkvzdM.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/RlTnBQwej1MPE23d.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/bbJ0befq5RgQ07JH.png!thumbnail">
+<meta property="article:published_time" content="2020-02-26T21:44:39.000Z">
+<meta property="article:modified_time" content="2020-02-26T21:47:21.870Z">
 <meta property="article:author" content="骆旺达">
-<meta property="article:tag" content="达达的博客">
+<meta property="article:tag" content="时序预测">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/k19rHa6Z714nrPdJ.png!thumbnail">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/02/27/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B-%E4%BB%8E%E6%9C%B4%E7%B4%A0%E6%B3%95%E5%88%B0ARIMA%E7%9A%84%E6%9C%80%E4%BC%98%E8%B0%83%E5%8F%82/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>达达的博客</title>
+  <title>时序预测-从朴素法到ARIMA的最优调参 | 达达的博客</title>
   
 
 
@@ -159,10 +191,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B-%E4%BB%8E%E6%9C%B4%E7%B4%A0%E6%B3%95%E5%88%B0ARIMA%E7%9A%84%E6%9C%80%E4%BC%98%E8%B0%83%E5%8F%82/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,8 +208,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/27/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B-%E4%BB%8E%E6%9C%B4%E7%B4%A0%E6%B3%95%E5%88%B0ARIMA%E7%9A%84%E6%9C%80%E4%BC%98%E8%B0%83%E5%8F%82/" class="post-title-link" itemprop="url">时序预测-从朴素法到ARIMA的最优调参</a>
+          时序预测-从朴素法到ARIMA的最优调参
         </h1>
 
         <div class="post-meta">
@@ -211,7 +242,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><p>​    本节内容主要下列七种方法：</p>
+        <h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><p>​    本节内容主要下列七种方法：</p>
 <p>​    1、朴素法：以序列训练集中的最后一个结果作为未来的预测结果；</p>
 <p>​    2、简单平均法：以训练集中所有数据的平均值作为未来的预测结果；</p>
 <p>​    3、移动平均法：以序列最后一段时间数据的平均值作为未来预测的结果，可以是60天/40天等；</p>
@@ -386,255 +417,36 @@
 <p>2、数据集+录播地址 链接:<a href="https://pan.baidu.com/s/1-_OXiahYPdyUwaU_TXAOLw" target="_blank" rel="noopener">https://pan.baidu.com/s/1-_OXiahYPdyUwaU_TXAOLw</a> 密码:rx5s</p>
 </blockquote>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B/" rel="tag"># 时序预测</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/Python%E5%B0%8F%E6%8A%80%E5%B7%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="http://cdn.dadastudio.top/cdn-1253701280/typora20191119212932.png">
-      <meta itemprop="name" content="骆旺达">
-      <meta itemprop="description" content="你不会找到路，除非你敢于迷路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="达达的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/26/Python%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">Python小技巧</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-02-26 18:44:51 / 修改时间：19:01:27" itemprop="dateCreated datePublished" datetime="2020-02-26T18:44:51+08:00">2020-02-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="一、时间戳转具体日期"><a href="#一、时间戳转具体日期" class="headerlink" title="一、时间戳转具体日期"></a>一、时间戳转具体日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line"># 时间戳</span><br><span class="line">data_time &#x3D; 1582712348</span><br><span class="line">timeArray &#x3D; time.localtime(data_time)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1:’2020-02-26 18:19:08’<br>otherStyleTime2 :’2020-02-26’  </p>
-<h3 id="二、具体日期转时间戳"><a href="#二、具体日期转时间戳" class="headerlink" title="二、具体日期转时间戳"></a>二、具体日期转时间戳</h3><h4 id="形式1：有时间和日期"><a href="#形式1：有时间和日期" class="headerlink" title="形式1：有时间和日期"></a>形式1：有时间和日期</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26 18:19:08&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray))</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1 : ‘2020-02-26 18:19:08’<br>otherStyleTime2 : ‘2020-02-26’<br>timeStamp : 1582712348  </p>
-<h4 id="形式2：只有日期"><a href="#形式2：只有日期" class="headerlink" title="形式2：只有日期"></a>形式2：只有日期</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">data_time &#x3D; &#39;2020-02-26&#39;</span><br><span class="line">timeArray &#x3D; time.strptime(data_time, &quot;%Y-%m-%d&quot;)</span><br><span class="line">otherStyleTime1 &#x3D; time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, timeArray)</span><br><span class="line">otherStyleTime2 &#x3D; time.strftime(&quot;%Y-%m-%d&quot;, timeArray)</span><br><span class="line">timeStamp &#x3D; int(time.mktime(timeArray)</span><br></pre></td></tr></table></figure>
-<p>otherStyleTime1 : ‘2020-02-26 00:00:00’<br>otherStyleTime2 : ‘2020-02-26’<br>timeStamp : 1582646400  </p>
-<h3 id="三、读json数据"><a href="#三、读json数据" class="headerlink" title="三、读json数据"></a>三、读json数据</h3><h4 id="3-1-针对小于200M的json文件"><a href="#3-1-针对小于200M的json文件" class="headerlink" title="3.1 针对小于200M的json文件"></a>3.1 针对小于200M的json文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">file_path &#x3D; &quot;路径&quot;</span><br><span class="line"></span><br><span class="line">with open(file_path, &#39;r&#39;,encoding&#x3D;&quot;UTF-8&quot;) as f:</span><br><span class="line">	data &#x3D; json.load(f)</span><br></pre></td></tr></table></figure>
 
 
-
-<h4 id="3-2-针对大于200M的json文件"><a href="#3-2-针对大于200M的json文件" class="headerlink" title="3.2 针对大于200M的json文件"></a>3.2 针对大于200M的json文件</h4><p>针对超过200M的json文件，需要采用逐行读取，计算机无法直接缓存大文件，容易出现memoryerror的问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># -!- coding: utf-8 -!-</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path &#x3D; &quot;路径&quot;</span><br><span class="line"></span><br><span class="line">with open(file_path, encoding&#x3D;&#39;utf-8&#39;) as f:</span><br><span class="line">    num1 &#x3D; 0</span><br><span class="line">    while True:</span><br><span class="line">      num1 &#x3D; num1 + 1</span><br><span class="line"></span><br><span class="line">      print(u&#39;正在载入第%s行......&#39; % num1)</span><br><span class="line">      try:</span><br><span class="line">        lines &#x3D; f.readline() # 使用逐行读取的方法</span><br><span class="line">        # 去掉&quot;[&quot;和&quot;]&quot;字符</span><br><span class="line">        if lines[0]&#x3D;&#x3D;&quot;[&quot;:</span><br><span class="line">            print(1)</span><br><span class="line">        elif lines[0]&#x3D;&#x3D;&quot;]&quot;:</span><br><span class="line">            print(2)</span><br><span class="line">            break</span><br><span class="line">        else:</span><br><span class="line">            # 去掉结尾的&quot;,&quot;</span><br><span class="line">            lines &#x3D; lines[:-2]</span><br><span class="line">            i &#x3D; json.loads(lines) # 解析每一行数据</span><br><span class="line">      except Exception as e:</span><br><span class="line">        print(str(e))</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="四、基于pandas的排序"><a href="#四、基于pandas的排序" class="headerlink" title="四、基于pandas的排序"></a>四、基于pandas的排序</h3><p>基于date属性值进行排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">content &#x3D; pd.read_csv(&quot;.&#x2F;data.csv&quot;)</span><br><span class="line">content &#x3D; pd.DataFrame(content)</span><br><span class="line"># 基于date属性进行从小到大排序</span><br><span class="line">content &#x3D; content.sort_values(by&#x3D;&#39;date&#39;)</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="五、基于panda的值选择"><a href="#五、基于panda的值选择" class="headerlink" title="五、基于panda的值选择"></a>五、基于panda的值选择</h3><p>选择满足‘2018-01-01’到‘2019-12-31’的数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">content &#x3D; content[content[&#39;date&#39;]&gt;&#x3D;&#39;2018-01-01&#39;][content[&#39;date&#39;]&lt;&#x3D;&#39;2019-12-31&#39;]</span><br></pre></td></tr></table></figure>
-
-
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/26/Python%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="prev" title="Python小技巧">
+      <i class="fa fa-chevron-left"></i> Python小技巧
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/my-first-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="http://cdn.dadastudio.top/cdn-1253701280/typora20191119212932.png">
-      <meta itemprop="name" content="骆旺达">
-      <meta itemprop="description" content="你不会找到路，除非你敢于迷路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="达达的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/25/my-first-blog/" class="post-title-link" itemprop="url">'第一篇博客'</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-02-25 04:22:59 / 修改时间：04:24:58" itemprop="dateCreated datePublished" datetime="2020-02-25T04:22:59+08:00">2020-02-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>使用github pages服务搭建博客的好处有：</p>
-<ol>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/25/my-first-blog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="http://cdn.dadastudio.top/cdn-1253701280/typora20191119212932.png">
-      <meta itemprop="name" content="骆旺达">
-      <meta itemprop="description" content="你不会找到路，除非你敢于迷路">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="达达的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-25 03:26:52" itemprop="dateCreated datePublished" datetime="2020-02-25T03:26:52+08:00">2020-02-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -685,6 +497,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、时间序列预测概述"><span class="nav-number">2.</span> <span class="nav-text">二、时间序列预测概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-如何预测未来几日JetRail高铁的乘客数量"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 如何预测未来几日JetRail高铁的乘客数量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-问题描述"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 问题描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-数据读取"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 数据读取</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-朴素法"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 朴素法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-简单平均法"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.3 简单平均法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-移动平均法"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.4 移动平均法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-简单指数平滑法"><span class="nav-number">2.1.6.</span> <span class="nav-text">2.1.5 简单指数平滑法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-6-霍尔特（Holt-线性趋势法"><span class="nav-number">2.1.7.</span> <span class="nav-text">2.1.6 霍尔特（Holt)线性趋势法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-7-Holt-Winters季节性预测模型"><span class="nav-number">2.1.8.</span> <span class="nav-text">2.1.7 Holt-Winters季节性预测模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-8-自回归移动平均模型（ARIMA）"><span class="nav-number">2.1.9.</span> <span class="nav-text">2.1.8 自回归移动平均模型（ARIMA）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2、ARIMA模型参数详解"><span class="nav-number">2.2.</span> <span class="nav-text">3.2、ARIMA模型参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-数据引入"><span class="nav-number">2.2.1.</span> <span class="nav-text">3.2.1 数据引入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-差分运算"><span class="nav-number">2.2.2.</span> <span class="nav-text">3.2.2 差分运算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-3-ARIMA基础参数介绍"><span class="nav-number">2.2.3.</span> <span class="nav-text">3.2.3 ARIMA基础参数介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-4-参数选择"><span class="nav-number">2.2.4.</span> <span class="nav-text">3.2.4 参数选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
